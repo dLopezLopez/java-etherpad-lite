@@ -16,6 +16,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>1.7</java.version>
+    <graphwalker.version>3.4.2</graphwalker.version>
   </properties>
 
   <licenses>
@@ -63,6 +64,44 @@
 	     <artifactId>mockserver-netty</artifactId>
 	     <version>5.4.1</version>
 	</dependency>
+	<!-- Mockito
+	<dependency>
+    <groupId>org.mockito</groupId>
+   <artifactId>mockito-all</artifactId>
+    <version>1.9.5</version>
+  </dependency> -->
+<!-- GRAPHWALKER DEPENDENCIES -->
+<dependency>
+  <groupId>org.graphwalker</groupId>
+  <artifactId>graphwalker-core</artifactId>
+  <version>${graphwalker.version}</version>
+</dependency>
+<dependency>
+  <groupId>org.graphwalker</groupId>
+  <artifactId>graphwalker-io</artifactId>
+  <version>${graphwalker.version}</version>
+</dependency>
+<dependency>
+  <groupId>org.graphwalker</groupId>
+  <artifactId>graphwalker-java</artifactId>
+  <version>${graphwalker.version}</version>
+</dependency>
+<dependency>
+  <groupId>org.graphwalker</groupId>
+  <artifactId>graphwalker-maven-plugin</artifactId>
+  <version>${graphwalker.version}</version>
+</dependency>
+<!-- Quickcheck -->
+<dependency>
+  <groupId>com.pholser</groupId>
+  <artifactId>junit-quickcheck-core</artifactId>
+  <version>0.8.1</version>
+</dependency>
+<dependency>
+  <groupId>com.pholser</groupId>
+  <artifactId>junit-quickcheck-generators</artifactId>
+  <version>0.8.1</version>
+</dependency>
   </dependencies>
 
 
@@ -144,8 +183,55 @@
 		        <aggregate>true</aggregate>
 		    </configuration>
 		</plugin>
-		
-
+		<!--Checkstyle-->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>3.0.0</version>
+        </plugin>
+        <!-- Spotbugs -->
+        <plugin>
+  <groupId>com.github.spotbugs</groupId>
+  <artifactId>spotbugs-maven-plugin</artifactId>
+  <version>3.1.8</version>
+  <dependencies>
+    <!-- overwrite dependency on spotbugs if you want to specify the version of spotbugs -->
+    <dependency>
+      <groupId>com.github.spotbugs</groupId>
+      <artifactId>spotbugs</artifactId>
+      <version>3.1.9</version>
+    </dependency>
+  </dependencies>
+</plugin>
+<!-- PIT - mutation -->
+<plugin>
+    <groupId>org.pitest</groupId>
+    <artifactId>pitest-maven</artifactId>
+    <version>1.4.3</version>
+ </plugin>
+ <!-- GraphWalker -->
+    <plugin>
+      <groupId>org.graphwalker</groupId>
+      <artifactId>graphwalker-maven-plugin</artifactId>
+      <version>${graphwalker.version}</version>
+      <!-- Bind goals to the default lifecycle -->
+<!--       <executions>
+        <execution>
+          <id>generate-test-sources</id>
+          <phase>generate-test-sources</phase>
+          <goals>
+            <goal>generate-test-sources</goal>
+          </goals>
+        </execution>
+        <execution>
+          <id>test</id>
+          <phase>test</phase>
+          <goals>
+            <goal>test</goal>
+          </goals>
+        </execution>
+      </executions> -->
+    </plugin>
     </plugins>
   </build>
 
