@@ -5,7 +5,7 @@ import org.graphwalker.java.annotation.GraphWalker;
 
 @GraphWalker(value = "random(edge_coverage(100))", start = "e_setUp")
 public class EPLiteClientGroupsTest extends ExecutionContext
-		implements net.gjerull.etherpad.client.CreateAndDeleteGroup {
+		implements EPLiteClientGroups {
 
 	@Override
 	public void e_setUp() {
