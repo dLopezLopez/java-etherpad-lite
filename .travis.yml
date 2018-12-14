@@ -1,7 +1,3 @@
 language: java
-before_install:
-  - mvn graphwalker:generate-sources
-  - mvn graphwalker:generate-test-sources
-  - mvn graphwalker:test
 after_success:
-  - mvn clean cobertura:cobertura coveralls:report
+  - mvn clean graphwalker:generate-sources test graphwalker:test
