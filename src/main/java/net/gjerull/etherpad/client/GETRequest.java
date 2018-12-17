@@ -1,8 +1,12 @@
 package net.gjerull.etherpad.client;
 
-import java.net.URL;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.net.URL;
+
+import etm.core.configuration.EtmManager;
+import etm.core.monitor.EtmMonitor;
+import etm.core.monitor.EtmPoint;
 
 /**
  * A class for easily executing an HTTP GET request.<br />
@@ -16,6 +20,8 @@ import java.io.InputStreamReader;
  */
 public class GETRequest implements Request {
     private final URL url;
+
+	private static final EtmMonitor etmMonitor = EtmManager.getEtmMonitor();
 
     /**
      * Instantiates a new GETRequest.
@@ -32,13 +38,19 @@ public class GETRequest implements Request {
      * @return String
      */
     public String send() throws Exception {
-        BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-        StringBuilder response = new StringBuilder();
-        String buffer;
-        while ((buffer = in.readLine()) != null) {
-            response.append(buffer);
+		EtmPoint point = etmMonitor.createPoint("GETRequest.send");
+
+		try {
+			BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+			StringBuilder response = new StringBuilder();
+			String buffer;
+			while ((buffer = in.readLine()) != null) {
+				response.append(buffer);
+			}
+			in.close();
+			return response.toString();
+		} finally {
+			point.collect();
         }
-        in.close();
-        return response.toString();
     }
 }
